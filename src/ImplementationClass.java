@@ -30,6 +30,9 @@ public class ImplementationClass {
 
 
 
+    public static void showEmployeeOptions(){
+        String menu = "1. Add employee\n2.Displau Employees\n3. Remove Employee\n4. Back to main\n5. Exit Program";
+    };
 
 
 
