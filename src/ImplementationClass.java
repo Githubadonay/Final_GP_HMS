@@ -1,3 +1,4 @@
+
 // TODO
 import javax.swing.JOptionPane;
 
@@ -5,11 +6,40 @@ public class ImplementationClass {
 
     // Main Arrays
     public static Room[] Rooms = new Room[100];
+    public static Employee[] allEmployees = new Employee[100];
+    public static Hotel[] allHotels = new Hotel[10];
 
     // Main Method
     public static void main(String[] args) {
-        Boolean flag = true;    // Set to false to break the loop.
-        String menu = "1. Room Menu\n...Everything Else...\n5. Exit";
+       /* Hotel hotel1 = new Hotel(1001, "JAVA INN", 
+       "1(800) 123-2345", "javaInn@Java.net", "03:00PM", "11:00AM\n");
+       Hotel hotel2 = new Hotel(1002, "JAVA INN", 
+       "1(800) 123-2345", "javaInn@Java.net", "03:00PM", "11:00AM"); */
+        String menu = ( "\n1. Start\n2. Never Mind");
+        int input = -1;
+        do{
+            int option = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            switch (option) {
+                case 1:
+                    hotel(args);
+                break;
+                case 2:
+                    System.exit(0);
+                break;
+                default:JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1 or 2. Try Again.");
+                break;
+            }
+
+        }while (input > 0 && input < 2);
+
+        
+    }
+
+
+       public static void hotel(String[] args) { 
+        Boolean flag = true; // Set to false to break the loop.
+
+        String menu = ("1. Room Menu\n2. Employee Menu\n3. Reservation Menu\n4. Guest Menu\n5. Home page\n6. Exit");
         do {
             int option = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
@@ -17,8 +47,13 @@ public class ImplementationClass {
                 case 1:
                     showRoomOptions();
                     break;
-
+                case 2:
+                    showEmployeeOptions();
+                    break;
                 case 5:
+                    main(new String[0]);
+                break;
+                case 6:
                     System.exit(0);
                     break;
 
@@ -28,16 +63,95 @@ public class ImplementationClass {
         } while (flag);
     }
 
-
-
-    public static void showEmployeeOptions(){
-        String menu = "1. Add employee\n2.Displau Employees\n3. Remove Employee\n4. Back to main\n5. Exit Program";
+    //Hotel info Adonays
+    
+    // Adonays Employee Section
+    public static void showEmployeeOptions() {
+        String menu = "1. Add employee\n2. Display Employees\n3. Search For Employee\n4. Remove Employee\n5. Back to main\n6. Exit Program";
+        int input = -1;
+        do {
+            input = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            switch (input) {
+                case 1:
+                    allEmployees[Employee.getNumOfEmployee()] = addEmployee();
+                    break;
+                case 2:
+                    displayEmployee(allEmployees);
+                    break;
+                case 3:
+                    String employeeID = JOptionPane.showInputDialog("Enter Employee ID to search? ");
+                       JOptionPane.showMessageDialog(null, "**Found Employee**\n" 
+                       + allEmployees[findEmployee(allEmployees, Integer.parseInt(employeeID))].toString());
+                    break;
+                case 4:
+                FireEmployee(allEmployees);
+                    break;
+                case 5:
+                    hotel(new String[0]);
+                    break;
+                case 6: 
+                System.exit(0);
+                    break;
+                default:
+                    break;
+            }
+        } while (input > 0 && input < 6);
+        displayEmployee(allEmployees);
     };
 
 
+    public static Employee addEmployee( ) {
+        Employee aEmployee = new Employee(0, null, null, null, null, 0, null);
+
+        int employeeID = Integer.parseInt(JOptionPane.showInputDialog("What is that Employee ID?"));
+        aEmployee.setEmployeeID(employeeID);
+        String name = JOptionPane.showInputDialog("What is the Employee Name?");
+        aEmployee.setName(name);
+        String email = JOptionPane.showInputDialog("What is Employee Email?");
+        aEmployee.setEmail(email);
+        String hireDate = JOptionPane.showInputDialog("What is Employee Hired date?");
+        aEmployee.setHireDate(hireDate);
+        String title = JOptionPane.showInputDialog("What is jobs title?");
+        double salary = Double.parseDouble(JOptionPane.showInputDialog("What is the Job Salary?"));
+        String jobDuty = JOptionPane.showInputDialog("What is jobs duty?");
+        Job aJob = new Job(title, salary, jobDuty);
+        aEmployee.setJob(aJob);
+        return aEmployee;
+
+    }// end of create cruise
+
+    public static int findEmployee(Employee[] allEmployees, int employeeID) {
+        int searchIndex = -1;
+        for (int i = 0; i < Employee.getNumOfEmployee(); i++) {
+            if (allEmployees[i].getEmployeeID() == employeeID) {
+                searchIndex = i;
+                break;
+            }
+        }
+        return searchIndex;
+    }
+
+    public static void displayEmployee(Employee[] allEmployees) {
+        String output = "";
+        for (int i = 0; i < Employee.getNumOfEmployee(); i++) {
+            output += allEmployees[i].toString() + "\n";
+
+        }
+        JOptionPane.showMessageDialog(null, output);
+    }
+    public static void FireEmployee(Employee[] allEmployees) {
+        displayEmployee(allEmployees);
+        int employeeToRemove = Integer.parseInt(JOptionPane.showInputDialog("Enter the cruise ID to delate"));
+        int index = findEmployee(allEmployees,employeeToRemove);
+        for (int i = index; i < Employee.getNumOfEmployee(); i++) {
+            allEmployees[i] = allEmployees[i + 1];
+        }
+        allEmployees[Employee.getNumOfEmployee()] = null;
+        Employee.updateNumOfEmployee();
+    }//end of Adonays Employee part
 
     // Zachs Section - Never tested, but it should work
-    public static void showRoomOptions () {
+    public static void showRoomOptions() {
         String menu = "1. Create Room\n2. Display Room\n3. Remove Room\n4. Back to Main Program\n5. Exit Program";
         int input = -1;
         do {
@@ -54,7 +168,7 @@ public class ImplementationClass {
                     removeRoom();
                     break;
                 case 4:
-                    main(new String[0]);
+                    hotel(new String[0]);
                     break;
                 case 5:
                     System.exit(0);
@@ -65,7 +179,7 @@ public class ImplementationClass {
         } while (input > 0 && input < 6);
     }
 
-    public static void createRoom () {
+    public static void createRoom() {
         int rn = Integer.parseInt(JOptionPane.showInputDialog("Enter Room Number: "));
         int type = Integer.parseInt(JOptionPane.showInputDialog("Enter Number of Beds (1/2): "));
         int price = Integer.parseInt(JOptionPane.showInputDialog("Enter Price per Night: "));
@@ -83,12 +197,12 @@ public class ImplementationClass {
         }
     }
 
-    public static int chooseRoomNumber () {
+    public static int chooseRoomNumber() {
         String output = "Enter Room Number:\n";
         int input = -1;
         System.out.println(Room.getNumOfRooms());
         for (int i = 0; i < Room.getNumOfRooms(); i++) {
-            output += "\n" + Rooms[i +1].toString();
+            output += "\n" + Rooms[i + 1].toString();
         }
 
         input = Integer.parseInt(JOptionPane.showInputDialog(output));
@@ -104,14 +218,14 @@ public class ImplementationClass {
         displayRoom(chooseRoomNumber());
     }
 
-    public static void displayRoom (int roomNumber) {
+    public static void displayRoom(int roomNumber) {
         String output = "SOMETHING WENT WRONG";
         if (Rooms[roomNumber].getRoomNumber() == roomNumber) {
             output = Rooms[roomNumber].toString();
         } else {
             for (int i = 0; i < Room.getNumOfRooms(); i++) {
-                if (Rooms[i +1].getRoomNumber() == roomNumber) {
-                    output = Rooms[i +1].toString();
+                if (Rooms[i + 1].getRoomNumber() == roomNumber) {
+                    output = Rooms[i + 1].toString();
                     break;
                 }
             }
@@ -119,24 +233,24 @@ public class ImplementationClass {
         JOptionPane.showMessageDialog(null, output);
     }
 
-    public static void removeRoom () {
+    public static void removeRoom() {
         removeRoom(chooseRoomNumber());
     }
 
-    public static void removeRoom (int roomNumber) {
+    public static void removeRoom(int roomNumber) {
         int num = -1;
         if (Rooms[roomNumber].getRoomNumber() == roomNumber) {
             num = roomNumber;
         } else {
             for (int i = 0; i < Room.getNumOfRooms(); i++) {
-                if (Rooms[i +1].getRoomNumber() == roomNumber) {
-                    num = i +1;
+                if (Rooms[i + 1].getRoomNumber() == roomNumber) {
+                    num = i + 1;
                 }
             }
         }
         for (int i = num; i < Room.getNumOfRooms(); i++) {
-            Rooms[i +1] = Rooms[i+2];
+            Rooms[i + 1] = Rooms[i + 2];
         }
         Rooms[Room.getNumOfRooms()] = null;
     }
-}
+};
