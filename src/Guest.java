@@ -5,7 +5,6 @@ public class Guest {
     private String guestPhone;
     private String guestAddress;
     private String guestEmail; 
-     //static variable 
     private static int Occupancy; 
    
 
@@ -18,17 +17,21 @@ public class Guest {
         Occupancy++;
     }
 
-    Guest(String guestID, String guestName, String guestPhone, String guestAddress, String guestEmail){
-        this.guestID = "";
-        this.guestName = "";
-        this.guestPhone = "";
-        this.guestAddress = "";
-        this.guestEmail = "";
+    Guest(String guestID, String guestName, String guestPhone, String guestAddress, String guestEmail) {
+        this.guestID = guestID;
+        this.guestName = guestName;
+        this.guestPhone = guestPhone;
+        this.guestAddress = guestAddress;
+        this.guestEmail = guestEmail;
         Occupancy++;
     }
 
     public Guest(Guest guest) {
-        //TODO Auto-generated constructor stub
+        this.guestID = guest.guestID;
+        this.guestName = guest.guestName;
+        this.guestPhone = guest.guestPhone;
+        this.guestAddress = guest.guestAddress;
+        this.guestEmail = guest.guestEmail;
     }
 
     //Accessors (getter methods)
