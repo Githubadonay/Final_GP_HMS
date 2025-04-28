@@ -12,18 +12,13 @@ public class Hotel {
     private Guest[] guest;
 
     public Hotel(int hotelID,String hotelName,String phoneNumber,
-     String emailAddress, String checkInTime, String checkOutTime/* , 
-     Room[] room, Employee[] employee, Guest[] guest, Reservation[] reservation */){
+     String emailAddress, String checkInTime, String checkOutTime){
          this.hotelID = hotelID;
          this.hotelName = hotelName;
          this.phoneNumber = phoneNumber;
          this.emailAddress = emailAddress;
          this.checkInTime = checkInTime;
          this.checkOutTime = checkOutTime;
-        /*  this.guest = guest;
-         this.employee = employee;
-         this.reservation = reservation;
-         this.room = room; */
         numOfHotel++;
 
     }

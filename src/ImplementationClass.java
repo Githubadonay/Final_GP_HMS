@@ -7,83 +7,25 @@ public class ImplementationClass {
     // Main Arrays
     public static Room[] Rooms = new Room[100];
     public static Employee[] allEmployees = new Employee[100];
-    public static Hotel[] allHotels = new Hotel[10];
     public static Reservation[] allReservations = new Reservation[10];
     public static Guest[] allGuests = new Guest[10];
 
-    // Main Method
-    public static void main(String[] args) {
-    String menu = ("1. Create Hotel\n2. Display Hotel\n3. Select Hotel\n4. Exit");
-    int input = -1;
-    do{
-        int option = Integer.parseInt(JOptionPane.showInputDialog(menu));
-        switch (option) {
-            case 1:
-            //hotel(args);
-            //createHotel(allHotels);
-            allHotels[Hotel.getNumOfHotel()] = createHotel(allHotels);
-                break;
-            case 2:
-            displayHotel(allHotels);
-                break;
-            case 3:
-            String index = JOptionPane.showInputDialog("Enter Hotel ID to select: ");
-            int id = Integer.parseInt(index);
-            selectHotle(allHotels, id);
-            case 4:
-                System.exit(0);
-                break;
+public static void main(String[] args) {
+    Hotel aHotel = new Hotel(1001, "JAVA INN", "1(800)-111-1111", 
+    "JavaHouse@java.net", "03:00PM", "11:00AM");
 
-            default:JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-4. Try Again.");
-
-                break;
-        }
-
-    }while (input > 0 && input < 4);
-
-}
-public static Hotel createHotel(Hotel[] allHotels) {
-    int hotelID = Integer.parseInt(JOptionPane.showInputDialog("What is the Hotel ID?"));
-    String hotelName = JOptionPane.showInputDialog("What is that hotel name?");
-    String hPhoneNumber = JOptionPane.showInputDialog("What is the hotel phone number?");
-    String hEmailAddress = JOptionPane.showInputDialog("What is the hotels address?");
-    String checkIN = JOptionPane.showInputDialog("What is the Hotels Check IN time?");
-    String checkOUT = JOptionPane.showInputDialog("What is the Hotels Check Out time?");
-    
-    Hotel aHotel = new Hotel(hotelID, hotelName, hPhoneNumber, hEmailAddress, checkIN, checkOUT);
-    return aHotel;
-}
-
-public static void displayHotel(Hotel[] allHotels) {
-    String output = "";
-    for (int i = 0; i < Hotel.getNumOfHotel(); i++) {
-        output += allHotels[i].toString() + "\n";
-    }
-    JOptionPane.showMessageDialog(null, output);
-}
-
-public static int selectHotle(Hotel[] allHotels, int hotelID) {
-    int searchIndex = -1;
-    for (int i = 0; i < Hotel.getNumOfHotel(); i++) {
-        if (allHotels[i].getHotelID() == hotelID) {
-            searchIndex = i;
-            break;
-        }
-    }
-    if (searchIndex >= 0) {
-        hotel(null);
-    }
-      //  hotel(allHotels[searchIndex]);
-      return searchIndex;
-} 
-
-
-
-
-       public static void hotel(String[] args) { 
         Boolean flag = true; // Set to false to break the loop.
-
-        String menu = ("*What would you like to see*\n1. Room Menu\n2. Employee Menu\n3. Reservation Menu\n4. Guest Menu\n5. Change Hotel\n6. Exit");
+    String welcomeText = 
+          "Welcome to " + aHotel.getHotelName() + "! please enjoy our Services!!!\n\n"
+        + "Hotel ID: "   + aHotel.getHotelID()     + "\n"
+        + "Phone: "      + aHotel.getPhoneNumber() + "\n"
+        + "Email: "      + aHotel.getEmailAddress()+ "\n"
+        + "Check-In: "   + aHotel.getCheckInTime() + "\n"
+        + "Check-Out: "  + aHotel.getCheckOutTime();
+            
+        JOptionPane.showMessageDialog( null, welcomeText);
+        
+        String menu = ("**MAIN MENU**\nWhat would you like to do?\n\n1. Room Menu\n2. Employee Menu\n3. Reservation Menu\n4. Guest Menu\n5. Exit");
         do {
             int option = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
@@ -94,12 +36,16 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
                 case 2:
                     showEmployeeOptions();
                     break;
-                case 5:
-                    main(new String[0]);
+                case 3:
+                //tasneem your reservation goes here
+                case 4:
+                //tasneem your Guest goes here
+                
                 break;
-                case 6:
-                    System.exit(0);
-                    break;
+                case 5:
+                System.exit(0);
+                break;
+                
 
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-5. Try Again.");
@@ -111,7 +57,7 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
     
     // Adonays Employee Section
     public static void showEmployeeOptions() {
-        String menu = "1. Add employee\n2. Display Employees\n3. Search For Employee\n4. Remove Employee\n5. Back to main\n6. Exit Program";
+        String menu = "**EMPLOYEE MENU**\nWhat would you like to do?\n\n1. Add employee\n2. Display Employees\n3. Search For Employee\n4. Remove Employee\n5. Back to main\n6. Exit Program";
         int input = -1;
         do {
             input = Integer.parseInt(JOptionPane.showInputDialog(menu));
@@ -131,7 +77,7 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
                 FireEmployee(allEmployees);
                     break;
                 case 5:
-                    hotel(new String[0]);
+                    main(new String[0]);
                     break;
                 case 6: 
                 System.exit(0);
@@ -148,19 +94,55 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
         Employee aEmployee = new Employee(0, null, null, 
         null, null, 0, null);
 
+        try{
         int employeeID = Integer.parseInt(JOptionPane.showInputDialog("What is that Employee ID?"));
         aEmployee.setEmployeeID(employeeID);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error! Employee ID must be a number");
+        }catch (IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        try{
         String name = JOptionPane.showInputDialog("What is the Employee Name?");
         aEmployee.setName(name);
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        try{
         String email = JOptionPane.showInputDialog("What is Employee Email?");
         aEmployee.setEmail(email);
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        try{
         String hireDate = JOptionPane.showInputDialog("What is Employee Hired date?");
         aEmployee.setHireDate(hireDate);
-        String title = JOptionPane.showInputDialog("What is jobs title?");
-        double salary = Double.parseDouble(JOptionPane.showInputDialog("What is the Job Salary?"));
-        String jobDuty = JOptionPane.showInputDialog("What is jobs duty?");
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        String title = "";
+        double salary = 0;
+        String jobDuty = "";
+        try{
+        title = JOptionPane.showInputDialog("What is jobs title?");
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        try{
+         salary = Double.parseDouble(JOptionPane.showInputDialog("What is the Job Salary?"));
+        }catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error! Job Salary must be a number");
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        try{
+        jobDuty = JOptionPane.showInputDialog("What is jobs duty?");
+        }catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
         Job aJob = new Job(title, salary, jobDuty);
         aEmployee.setJob(aJob);
+        
         return aEmployee;
 
     }// end of create cruise
@@ -198,7 +180,7 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
 
     // Zachs Section - Never tested, but it should work
     public static void showRoomOptions() {
-        String menu = "1. Create Room\n2. Display Room\n3. Remove Room\n4. Back to Main Program\n5. Exit Program";
+        String menu = "**ROOM MENU**\nWhat would you like to do?\n\n1. Create Room\n2. Display Room\n3. Remove Room\n4. Back to Main Program\n5. Exit Program";
         int input = -1;
         do {
             input = Integer.parseInt(JOptionPane.showInputDialog(menu));
@@ -214,7 +196,7 @@ public static int selectHotle(Hotel[] allHotels, int hotelID) {
                     removeRoom();
                     break;
                 case 4:
-                    hotel(new String[0]);
+                    main(null);
                     break;
                 case 5:
                     System.exit(0);
