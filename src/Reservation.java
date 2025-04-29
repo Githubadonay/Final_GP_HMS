@@ -141,8 +141,8 @@ public class Reservation {
     }
 
     
-    public  double calculateTotalPrice() {
-        return totalPrice = numOfReservation * numOfNights;
+    public double calculateTotalPrice() {
+        return totalPrice = this.room.getPricePerNight() * numOfNights;
         
     }
      //toString method 
@@ -151,6 +151,6 @@ public class Reservation {
         "Arrival Date:" + this.getarrivalDate() + "\n"  + 
         "Departure Date:" +this.getdepartureDate() + "\n" +
         "Nights Stayed:" + this.getnumOfNights() + "\n" + 
-        "Total:" + this.calculateTotalPrice(); 
+        "Total:" + this.totalPrice; 
     }
 }
