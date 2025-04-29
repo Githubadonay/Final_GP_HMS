@@ -16,7 +16,7 @@ public static void main(String[] args) {
 
         Boolean flag = true; // Set to false to break the loop.
     String welcomeText = 
-          "Welcome to " + aHotel.getHotelName() + "! please enjoy our Services!!!\n\n"
+          "Welcome to " + aHotel.getHotelName() + "! Enjoy our Services!!!\n\n"
         + "Hotel ID: "   + aHotel.getHotelID()     + "\n"
         + "Phone: "      + aHotel.getPhoneNumber() + "\n"
         + "Email: "      + aHotel.getEmailAddress()+ "\n"
@@ -37,21 +37,19 @@ public static void main(String[] args) {
                     showEmployeeOptions();
                     break;
                 case 3:
-                //tasneem your reservation goes here
+                showReservationMenu();
                 case 4:
-                //tasneem your Guest goes here
-                
+                showGuestMenu();
                 break;
                 case 5:
                 System.exit(0);
                 break;
-                
-
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-5. Try Again.");
             }
         } while (flag);
     }
+
 
     //Hotel info Adonays
     
@@ -83,6 +81,7 @@ public static void main(String[] args) {
                 System.exit(0);
                     break;
                 default:
+                JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-6. Try Again.");
                     break;
             }
         } while (input > 0 && input < 6);
@@ -145,7 +144,7 @@ public static void main(String[] args) {
         
         return aEmployee;
 
-    }// end of create cruise
+    }
 
     public static int findEmployee(Employee[] allEmployees, int employeeID) {
         int searchIndex = -1;
@@ -169,7 +168,7 @@ public static void main(String[] args) {
 
     public static void FireEmployee(Employee[] allEmployees) {
         displayEmployee(allEmployees);
-        int employeeToRemove = Integer.parseInt(JOptionPane.showInputDialog("Enter the cruise ID to delate"));
+        int employeeToRemove = Integer.parseInt(JOptionPane.showInputDialog("Enter the Employee ID to delate"));
         int index = findEmployee(allEmployees,employeeToRemove);
         for (int i = index; i < Employee.getNumOfEmployee(); i++) {
             allEmployees[i] = allEmployees[i + 1];
@@ -178,6 +177,224 @@ public static void main(String[] args) {
         Employee.updateNumOfEmployee();
     }//end of Adonays Employee part
 
+
+    //Tasneems work 
+
+    public static void showReservationMenu (){
+        String menu = "1. Add Reservation\n2. Remove Reservation\n3. Search Reservation\n4. Display Reservation\n5. Return to Main Menu\n6.Exit";
+        int choice = 0;
+        do{
+            choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            switch(choice){
+                case 1:
+                    allGuests[Guest.getOccupancy()] = createGuest();
+                    allReservations[Reservation.getnumOfReservation()] = createReservation();
+                    break;
+                case 2:
+                    removeReservation(allReservations);
+                    break; 
+                case 3:
+                    String searchKey = JOptionPane.showInputDialog("Enter the Reservation ID you are searching for");
+                    int found = searchReservation(allReservations, searchKey);
+                    if(found >-1)
+                        JOptionPane.showMessageDialog(null, "The reservation was found:" + allReservations[found].toString()); 
+                    else 
+                        JOptionPane.showMessageDialog(null, "Reservation not found");
+                break;    
+                case 4:
+                   printReservation(allReservations);
+                    break;
+                case 5:
+                    main(new String[0]);
+                    break;
+                case 6:
+                    System.exit(0);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Invalid Choice! Must be between 1-6");
+            }//end of switch 
+    
+        }while(choice>=1 && choice<=5);
+    }// end of method 
+
+public static Reservation createReservation(){
+Reservation reservation = new Reservation();
+
+try{
+    String reservationID = JOptionPane.showInputDialog("Please enter the reservation ID");
+    reservation.setreservationID(reservationID);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String arrivalDate = JOptionPane.showInputDialog("Please enter the date of arrival");
+    reservation.setarrivalDate(arrivalDate);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String departDate = JOptionPane.showInputDialog("Please enter the date of departure");
+    reservation.setdepartureDate(departDate);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+try{
+    int numOfNights = Integer.parseInt(JOptionPane.showInputDialog("Enter the amount of nights you will stay"));
+    reservation.setnumOfNights(numOfNights);
+}catch(NumberFormatException ex){
+    JOptionPane.showMessageDialog(null, "Error! Please enter a valid number of nights");
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+return reservation; 
+}// end of create a reservation 
+
+//search reservation 
+public static int searchReservation(Reservation[] allReservations, String reservationID){
+int searchIndex = -1;
+for(int i=0; i<Reservation.getnumOfReservation();i++){
+    if((allReservations[i].getreservationID()).equalsIgnoreCase(reservationID)){
+        searchIndex = i;
+        break;
+    }
+}
+return searchIndex;
+}
+
+//remove reservation 
+public static void removeReservation(Reservation[] allReservations) {
+printReservation(allReservations);
+String removeReservation = JOptionPane.showInputDialog("Enter the reservation you would like to remove");
+int index = searchReservation(allReservations, removeReservation);
+if (index > -1) {
+    for (int i = index; i < Reservation.getnumOfReservation(); i++) {
+        allReservations[i] = allReservations[i + 1];
+    }
+    allReservations[Reservation.getnumOfReservation()] = null;
+    Reservation.updatenumOfReservation();
+    } else {
+ JOptionPane.showMessageDialog(null, "Error! Reservation was not found");
+}
+}
+
+//display reservation 
+public static void printReservation(Reservation[] allReservations){
+String output = "" ;
+for(int i=0; i<Reservation.getnumOfReservation(); i++){
+    output += allReservations[i].toString() + "\n";
+}
+JOptionPane.showMessageDialog(null, output);
+}
+
+
+// Method for Guests 
+public static void showGuestMenu (){
+String menu = "1. Add Guest\n2. Remove Guest\n3. Display Guest\n4. Return to Main Menu\n5. Exit";
+int choice = 0;
+do{
+    choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
+    switch(choice){
+        case 1:
+            allGuests[Guest.getOccupancy()] = createGuest();
+            break;
+        case 2:
+            removeGuest(allGuests);
+            break; 
+        case 3:
+            printGuest(allGuests);
+        case 4:
+            main(new String[0]);
+            break;
+        case 5:
+            System.exit(0);
+            break;
+        default:
+            JOptionPane.showMessageDialog(null, "Invalid Choice! Must be between 1-5");
+    }//end of switch 
+
+}while(choice>=1 && choice<=5);
+}// end of method 
+
+public static Guest createGuest(){
+Guest guest = new Guest();
+
+try{
+    String GuestID = JOptionPane.showInputDialog("Please enter the Guest ID");
+    guest.setguestID(GuestID);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String gName = JOptionPane.showInputDialog("Please enter the Guest name");
+    guest.setguestName(gName);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String gPhone = JOptionPane.showInputDialog("Please enter the guest phone number");
+    guest.setguestPhone(gPhone);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String gAddress = JOptionPane.showInputDialog("Please enter the Guest address");
+    guest.setguestAddress(gAddress);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+try{
+    String gEmail = JOptionPane.showInputDialog("Please enter the Guest email");
+    guest.setguestEmail(gEmail);
+}catch(IllegalArgumentException ex){
+    JOptionPane.showMessageDialog(null, ex.getMessage());
+}
+
+return guest; 
+}// end of create a guest 
+
+//search guests 
+public static int searchGuests(Guest[] allGuests, String guestID){
+int searchIndex = -1;
+for(int i=0; i<Guest.getOccupancy();i++){
+    if((allGuests[i].getguestID()).equalsIgnoreCase(guestID)){
+        searchIndex = i;
+        break;
+    }
+}
+return searchIndex;
+}
+
+//remove Guest 
+public static void removeGuest(Guest[] allGuests) {
+printGuest(allGuests);
+String removeGuest = JOptionPane.showInputDialog("Enter the Guest you want to remove");
+int index = searchGuests(allGuests, removeGuest);
+if (index > -1) {
+    for (int i = index; i < Guest.getOccupancy(); i++) {
+        allGuests[i] = allGuests[i + 1];
+    }
+    allGuests[Guest.getOccupancy()] = null;
+    Guest.updateOccupancy();
+    } else {
+ JOptionPane.showMessageDialog(null, "Error! Guest was not found");
+}
+}
+
+//display guest 
+public static void printGuest(Guest[] allGuests){
+String output = "" ;
+for(int i=0; i<Guest.getOccupancy(); i++){
+    output += allGuests[i].toString() + "\n";
+}
+JOptionPane.showMessageDialog(null, output);
+}
     // Zachs Section - Never tested, but it should work
     public static void showRoomOptions() {
         String menu = "**ROOM MENU**\nWhat would you like to do?\n\n1. Create Room\n2. Display Room\n3. Remove Room\n4. Back to Main Program\n5. Exit Program";

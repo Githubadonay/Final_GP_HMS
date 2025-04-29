@@ -1,4 +1,4 @@
-public class Payment {
+/* public class Payment {
     private String paymentID;
     private String paymentMethod;
     private String paymentDate;
@@ -64,3 +64,4 @@ public class Payment {
     }
 
 }
+ */

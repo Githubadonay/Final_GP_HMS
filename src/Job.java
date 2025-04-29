@@ -1,3 +1,4 @@
+//ADONAY
 public class Job{
     private String title;
     private double salary;

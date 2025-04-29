@@ -1,3 +1,4 @@
+//TASNEEM
 public class Guest {
     //instance variables 
     private String guestID;
@@ -5,6 +6,7 @@ public class Guest {
     private String guestPhone;
     private String guestAddress;
     private String guestEmail; 
+     //static variable 
     private static int Occupancy; 
    
 
@@ -17,21 +19,16 @@ public class Guest {
         Occupancy++;
     }
 
-    Guest(String guestID, String guestName, String guestPhone, String guestAddress, String guestEmail) {
-        this.guestID = guestID;
-        this.guestName = guestName;
-        this.guestPhone = guestPhone;
-        this.guestAddress = guestAddress;
-        this.guestEmail = guestEmail;
+    Guest(String guestID, String guestName, String guestPhone, String guestAddress, String guestEmail){
+        this.guestID = "";
+        this.guestName = "";
+        this.guestPhone = "";
+        this.guestAddress = "";
+        this.guestEmail = "";
         Occupancy++;
     }
+    public Guest(Guest guest){
 
-    public Guest(Guest guest) {
-        this.guestID = guest.guestID;
-        this.guestName = guest.guestName;
-        this.guestPhone = guest.guestPhone;
-        this.guestAddress = guest.guestAddress;
-        this.guestEmail = guest.guestEmail;
     }
 
     //Accessors (getter methods)
@@ -57,9 +54,15 @@ public class Guest {
     //mutators (setter methods)
     public void setguestID (String guestID){
         if(guestID.equals("") && guestID.length() != 5)
-        throw new IllegalArgumentException(" Error! The reservation ID cannot be blank and must have a length of 5");
+        throw new IllegalArgumentException(" Error! The guest ID cannot be blank and must have a length of 5");
     else 
         this.guestID = guestID;
+    }
+    public void setguestName (String guestName){
+        if(guestName.equals("") )
+        throw new IllegalArgumentException(" Error! The guest name cannot be blank");
+    else 
+        this.guestName = guestName;
     }
     //validation using is digit 
     public void setguestPhone (String guestPhone){
@@ -98,13 +101,17 @@ public class Guest {
         throw new IllegalArgumentException("Error! Please fill out the field");
     }
 
+    public static void updateOccupancy() {
+        Occupancy--;
+    }
+
     //toString method 
     public String toString (){
-        return this.getguestID() + " | "  + 
-        this.getguestName() + " | "  + 
-        this.getguestPhone() + " | "  + 
-        this.getguestAddress() + " | "  + 
-        this.getguestEmail(); 
+        return " Guest ID:" + this.getguestID() + "\n"  + 
+        " Guest Name:" + this.getguestName() + "\n"  + 
+        " Guest Phone Number:" +this.getguestPhone() + "\n"  + 
+        " Guest Address:" +this.getguestAddress() + "\n"  + 
+        " Guest Email:" +this.getguestEmail(); 
     }
     
 }

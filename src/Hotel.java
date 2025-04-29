@@ -1,3 +1,4 @@
+//ADONAY
 public class Hotel {
     private int hotelID;
     private String hotelName;
