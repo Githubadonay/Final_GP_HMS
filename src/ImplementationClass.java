@@ -1,5 +1,5 @@
 
-// TODO
+
 import javax.swing.JOptionPane;
 
 public class ImplementationClass {
@@ -14,7 +14,7 @@ public static void main(String[] args) {
     Hotel aHotel = new Hotel(1001, "JAVA INN", "1(800)-111-1111", 
     "JavaHouse@java.net", "03:00PM", "11:00AM");
 
-        Boolean flag = true; // Set to false to break the loop.
+        //Boolean flag = true; // Set to false to break the loop.
     String welcomeText = 
           "Welcome to " + aHotel.getHotelName() + "! Enjoy our Services!!!\n\n"
         + "Hotel ID: "   + aHotel.getHotelID()     + "\n"
