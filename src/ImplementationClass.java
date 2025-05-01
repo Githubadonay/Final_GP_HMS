@@ -26,8 +26,15 @@ public static void main(String[] args) {
         JOptionPane.showMessageDialog( null, welcomeText);
         
         String menu = ("**MAIN MENU**\nWhat would you like to do?\n\n1. Room Menu\n2. Employee Menu\n3. Reservation Menu\n4. Guest Menu\n5. Exit");
+            
         do {
-            int option = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            int option=0;
+            try{
+            option = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null,"Please enter right menu option");
+            }
 
             switch (option) {
                 case 1:
@@ -47,7 +54,7 @@ public static void main(String[] args) {
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-5. Try Again.");
             }
-        } while (flag);
+        } while (true);
     }
 
 
@@ -96,6 +103,7 @@ public static void main(String[] args) {
         try{
         int employeeID = Integer.parseInt(JOptionPane.showInputDialog("What is that Employee ID?"));
         aEmployee.setEmployeeID(employeeID);
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Error! Employee ID must be a number");
         }catch (IllegalArgumentException ex){
@@ -214,11 +222,16 @@ public static void main(String[] args) {
                     JOptionPane.showMessageDialog(null, "Invalid Choice! Must be between 1-6");
             }//end of switch 
     
-        }while(choice>=1 && choice<=5);
+        }while(choice != 6);
     }// end of method 
 
 public static Reservation createReservation(){
+//Reservation reservation = new Reservation();
 Reservation reservation = new Reservation();
+int roomNum=Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the room number"));
+Room room=searchRoom(roomNum);
+reservation.setroom(room);
+
 
 try{
     String reservationID = JOptionPane.showInputDialog("Please enter the reservation ID");
@@ -294,6 +307,7 @@ JOptionPane.showMessageDialog(null, output);
 public static void showGuestMenu (){
 String menu = "1. Add Guest\n2. Remove Guest\n3. Display Guest\n4. Return to Main Menu\n5. Exit";
 int choice = 0;
+
 do{
     choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
     switch(choice){
@@ -421,7 +435,7 @@ JOptionPane.showMessageDialog(null, output);
                 default:
                     JOptionPane.showMessageDialog(null, "Invalid Option. Must be 1-5. Try Again.");
             }
-        } while (input > 0 && input < 6);
+        } while (input != 5);
     }
 
     public static void createRoom() {
@@ -440,7 +454,10 @@ JOptionPane.showMessageDialog(null, output);
         } else {
             throw new IllegalArgumentException("Number of Beds Must Be Either 1 or 2");
         }
+
     }
+
+   
 
     public static int chooseRoomNumber() {
         String output = "Enter Room Number:\n";
@@ -463,7 +480,15 @@ JOptionPane.showMessageDialog(null, output);
         displayRoom(chooseRoomNumber());
     }
 
-    public static void displayRoom(int roomNumber) {
+    public static Room searchRoom(int roomNumber){
+        for(int i = 0; i < Room.getNumOfRooms(); i++){
+            if(Rooms[i+1].getRoomNumber() == roomNumber)
+                return Rooms[i+1];
+        }
+        return null;
+    }
+
+    public static  void displayRoom(int roomNumber) {
         String output = "SOMETHING WENT WRONG";
         if (Rooms[roomNumber].getRoomNumber() == roomNumber) {
             output = Rooms[roomNumber].toString();
@@ -476,6 +501,7 @@ JOptionPane.showMessageDialog(null, output);
             }
         }
         JOptionPane.showMessageDialog(null, output);
+        showRoomOptions();
     }
 
     public static void removeRoom() {

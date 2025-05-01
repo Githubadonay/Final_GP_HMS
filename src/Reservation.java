@@ -16,6 +16,7 @@ public class Reservation {
         this.arrivalDate = "";
         this.departureDate = "";
         this.totalPrice = 0;
+        
         numOfReservation++;
     }
 
@@ -55,7 +56,8 @@ public class Reservation {
         return new Guest(this.guest);
     }
     public Room getRoom(){
-        return new Room(this.room);
+       // return new Room(this.room);
+       return this.room;
     }
     public static int getnumOfReservation(){
         return numOfReservation;
@@ -142,7 +144,7 @@ public class Reservation {
 
     
     public double calculateTotalPrice() {
-        return totalPrice = this.room.getPricePerNight() * numOfNights;
+        return totalPrice = (this.room.getPricePerNight() * this.numOfNights);
         
     }
      //toString method 
@@ -151,6 +153,6 @@ public class Reservation {
         "Arrival Date:" + this.getarrivalDate() + "\n"  + 
         "Departure Date:" +this.getdepartureDate() + "\n" +
         "Nights Stayed:" + this.getnumOfNights() + "\n" + 
-        "Total:" + this.totalPrice; 
+        "Total:" + this.calculateTotalPrice(); 
     }
 }

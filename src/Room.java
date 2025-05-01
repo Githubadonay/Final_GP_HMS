@@ -7,8 +7,8 @@ public class Room {
 
     Room () {
         this.roomNumber = 0;
-        this.roomType = "One Bed";
-        this.pricePerNight = 50;
+        this.roomType = "";
+        this.pricePerNight = 4.0;
         Room.numOfRooms++;
     }
 
@@ -16,7 +16,7 @@ public class Room {
         this.setRoomNumber(roomNumber);
         this.setRoomType(roomType);
         this.setPricePerNight(pricePerNight);
-        
+        this.pricePerNight = 4.0;  
         Room.numOfRooms++;
     }
 
