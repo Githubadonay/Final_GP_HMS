@@ -150,6 +150,7 @@ public static void main(String[] args) {
         Job aJob = new Job(title, salary, jobDuty);
         aEmployee.setJob(aJob);
         
+        
         return aEmployee;
 
     }
@@ -192,6 +193,12 @@ public static void main(String[] args) {
         String menu = "1. Add Reservation\n2. Remove Reservation\n3. Search Reservation\n4. Display Reservation\n5. Return to Main Menu\n6.Exit";
         int choice = 0;
         do{
+            try{
+                choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
+                }
+                catch(NumberFormatException e){
+                    JOptionPane.showMessageDialog(null,"Please enter right menu option");
+                }
             choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
             switch(choice){
                 case 1:
@@ -309,6 +316,12 @@ String menu = "1. Add Guest\n2. Remove Guest\n3. Display Guest\n4. Return to Mai
 int choice = 0;
 
 do{
+    try{
+        choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null,"Please enter right menu option");
+        }
     choice = Integer.parseInt(JOptionPane.showInputDialog(menu));
     switch(choice){
         case 1:
@@ -414,6 +427,12 @@ JOptionPane.showMessageDialog(null, output);
         String menu = "**ROOM MENU**\nWhat would you like to do?\n\n1. Create Room\n2. Display Room\n3. Remove Room\n4. Back to Main Program\n5. Exit Program";
         int input = -1;
         do {
+            try{
+                input = Integer.parseInt(JOptionPane.showInputDialog(menu));
+                }
+                catch(NumberFormatException e){
+                    JOptionPane.showMessageDialog(null,"Please enter right menu option");
+                }
             input = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
             switch (input) {
